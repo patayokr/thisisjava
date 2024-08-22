@@ -7,3 +7,12 @@
 - ![중첩 클래스 종류](/src/ch09/image/Nested_class.jpg)
 - 인스턴스 멤버 클래스는 특정 클래스 내부에서 사용되므로 `private`접근 제한을 갖는것이 일반적이다.
 - 내부 어디에서나 생성할 수는 없고 인스턴스 필드값,생성자,인스턴스 메소드에서 생성할 수 있다.
+
+## 정적 멤버 클래스
+
+- static 키워드와 같이 A클래스의 멤버로 선언된 B클래스를 말한다.
+-```java
+ [public] class A{
+    [public|private] static class  B{}
+ }```
+- 정적 멤버 클래스 B는 A클래스 외부에서 A와 함께 사용되는 경우가 많기 때문에 주로 default 또는 public 접근 제한을 가진다.
