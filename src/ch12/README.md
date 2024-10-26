@@ -91,3 +91,64 @@ public record Person(String name, int age){}
 - `dto`클래스를 작성할때 Getter,Setter,hashCode(),equals(),toString()메소드를 자동 생성한다.
 - `record`와의 차이점은 필드가 `final`이 아니며 값을 읽는 getter ,setter는 각각 `getXXX()`,`setXXX()`,`isXXX()` 로 명명된다.
 - [lombok 예시](/src/ch12/sec03/exam05/Member.java)
+
+## 12.4 System 클래스
+
+- 자바 프로그램은 운영체제에서 바로 실행되는 것이 아니라 자바 가상머신 위에서 실행된다
+- 따라서 운영체제의 모든 기능을 자바 코드로 직접 접근하긴 어렵지만 java.lang 패키지에 속하는 `System`클래스를 이용하면 운영체제의 일부 기능 이용 가능
+- ![System 클래스](/src/ch12/image/SystemClass.jpg)
+
+### 키보드 입력
+
+- 키보드로부터 입력된 키를 읽기 위해 `in`필드를 이용해서 입력한 키의 코드값을 알 수 있다.
+- [예제 코드](/src/ch12/sec04/InExample.java)
+
+```java
+System.in.read();
+```
+
+- `read()`메소드는 호출과 동시에 키 코드를 읽는게 아니라 `enter`키를 누르기 전 까지는 대기상태에 있다가 `enter`를 누르면 입력했던 키들을 하나씩 읽는다.
+
+## 프로세스 종료
+
+- 운영체제는 실행중인 프로그램을 프로세스로 관리한다.
+- 자바 프로그램을 실행하면 JVM 프로세스가 실행되고 이 프로세스가 `main()` 메소드를 호출한다.
+- 프로세스를 강제 종료하고 싶다면 `System.exit(int status)` 메소드를 사용한다.
+- exit() 메소드는 int매개값이 필요한데 정상 종료일 경우엔 `0` 비정상 종료는 `-1`,`1`을 주는 것이 관례이다.
+
+## 진행시간 읽기
+
+- `System` 클래스의 `currentTimeMillis()` 메소드와 `nanoTime()` **매소드는 1970년 1월 1일 0시** 부터 시작해서 현재까지 진행된 시간을 리턴한다.
+- `long currentTimeMillis()`: 1/1000초 단위로 진행된 시간을 리턴
+- `long nanoTime()` : 1/10<sup>9</sup> 초 단위로 진행된 시간을 리턴한다.
+
+## 시스템 프로퍼티 읽기
+
+- `시스템 프로퍼티`는 자바 프로그램이 시작될 때 자동 설정되는 시스템의 속성을 말한다.
+
+| 이름                       |          설명           | 값  |
+| :------------------------- | :---------------------: | :-: |
+| java.specification.version |     자바 스펙 버전      | 17  |
+| java.home                  |    JDK 디렉토리 경로    |     |
+| os.name                    |        운영체제         |     |
+| user.name                  |       사용자 이름       |     |
+| user.home                  | 사용자 홈 디렉토리 경로 |     |
+| user.dir                   |   현재 디렉토리 경로    |     |
+
+- [예제](/src/ch12/sec04/GetPropertyExample.java)
+
+## 12.5 문자열 클래스
+
+- 자바에서 문자열과 관련된 주요 클래스는 다음과 같다 `String`,`StringBuilder`,`StringTokenizer`
+
+### String 클래스
+
+- 문자열의 `+`연산은 새로운 String 객체가 생성되고 이전 객체는 버려지므로 효율이 좋지 않다
+- `StringBuilder`는 내부 버퍼(데이터를 저장하는 메모리) 에 문자열을 저장해두고 그 안에서 추가,수정,삭제를 하도록 설계되어있다.
+- `StringBuilder`의 주요 메소드는 다음과 같다
+  - append(기본값|문자열) :문자열을 끝에 추가
+  - insert(위치,기본값|문자열): 문자열을 지정 위치에추가
+  - delete(시작위치,끝위치):문자열 일부를 삭제
+  - replace(시작위치,끝위치,문자열):문자열 일부를 대체
+  - toString(): 완성된 문자열을 리턴
+- toString()을 제외한 다른 메소드는 `StringBuilder`객체를 리턴하기 때문에 연이어서 다른 메소드를 호출하는 **메소드 체이닝** 패턴을 사용할 수 있다.
