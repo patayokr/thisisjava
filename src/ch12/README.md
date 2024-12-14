@@ -152,3 +152,46 @@ System.in.read();
   - replace(시작위치,끝위치,문자열):문자열 일부를 대체
   - toString(): 완성된 문자열을 리턴
 - toString()을 제외한 다른 메소드는 `StringBuilder`객체를 리턴하기 때문에 연이어서 다른 메소드를 호출하는 **메소드 체이닝** 패턴을 사용할 수 있다.
+- 문자를 구분자(`delimiter`)로 분리하려면 `spilt`이나 `StringTokenizer`를 사용해야하는데 두 함수의 차이점은 `split`은 구분자로 정규식을 사용하고 `Stringtokenizer`는 문자를 사용한다는 점이다. [예제](/src/ch12/sec05/StringTokenizerExample.java)
+
+## 12.6 포장 클래스
+
+- 자바에서는 기본 클래스의 값을 가지는 객체를 생성할 수 있는데 이러한 객체를 `포장(wrapper)`객체라고 한다.
+- 포장 객체는 포장하고 있는 기본 타입의 값을 변경할 수 없고 단지 객체로 생성하는데 목적이 있다.
+
+### 박싱과 언박싱
+
+- 기본타입의 값을 포장 객체로 만드는 것을 `박싱(boxing)` 이라고 하고 반대의 과정을 `언박싱(unboxing)`이라고 한다.
+
+```java
+Integer obj = 100; //박싱
+int value = obj; //언박싱
+```
+
+- 언박싱은 다음과 같이 연산 과정에서도 발생한다.
+
+```java
+int value = obj + 50;
+```
+
+### 문자열을 기본 타입 값으로 변환
+
+- 포장 클래스에는 문자열을 기본 타입 값으로 변환할 때도 사용된다. 대부분의 포장 클래스에는 `parse+기본타입` 명으로 되어있는 정적 메소드가 존재한다.
+
+### 포장값 비교
+
+- 포장 객체는 `!=` `==`를 이용해서 내부값을 비교할 수 없다. 이 연산은 객체 내부의 값을 비교하는 것이 아니라 포장 객체의 번지를 비교하기 때문이다.
+- 포장 객체의 비교를 하기 위해서는 `equals` 함수를 사용해야 한다.
+
+```java
+Integer obj1 = 300;
+Integer obj2 = 300;
+System.out.println(obj1==obj2); //false
+```
+
+## 12.7 수학 클래스
+
+- Math 클래스는 수학 계산에 사용할 수 있는 메소드를 제공한다. 모두 static메소드 이므로 바로 사용이 가능하다.[예제](/src/ch12/sec07/MathExample.java)
+- 난수를 얻는 방법은 Math 클래스의 `random()` 함수를 사용하거나 `java.util.Random` 클래스를 사용할 수 있다.
+- `Math.random()` 함수는 0.0과 1.0 사이의 double 타입 난수를 리턴한다.
+- `Random` 클래스는 boolean,int,double 형식의 난수를 얻을 수 있다.(nextBoolean,nextDouble,nextInt)
