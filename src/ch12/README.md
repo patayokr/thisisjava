@@ -195,3 +195,90 @@ System.out.println(obj1==obj2); //false
 - 난수를 얻는 방법은 Math 클래스의 `random()` 함수를 사용하거나 `java.util.Random` 클래스를 사용할 수 있다.
 - `Math.random()` 함수는 0.0과 1.0 사이의 double 타입 난수를 리턴한다.
 - `Random` 클래스는 boolean,int,double 형식의 난수를 얻을 수 있다.(nextBoolean,nextDouble,nextInt)
+
+## 12.8 날짜와 시간 클래스
+
+- 자바는 컴퓨터의 날짜와 시간을 읽을 수 있도록 `java.util`패키지에서 `Date`와 `Calender` 클래스를 제공하고 있다.
+- 또한 날짜와 시간을 조작할 수 있도록 `java.time` 패키지에서 `LocalDateTime` 등의 클래스를 제공한다.
+
+|    클래스     |                     설명                     |
+| :-----------: | :------------------------------------------: |
+|     Date      |       날짜 정보를 전달하기 위해서 사용       |
+|   Calender    | 다양한 시간대별로 날짜와 시간을 얻을 때 사용 |
+| LocalDateTime |         날짜와 시간을 조작할 때 사용         |
+
+### Date 클래스
+
+- Date 클래스의 Date() 생성자는 컴퓨터의 현재 날짜를 읽어서 Date 객체로 만든다.
+- 현재 날짜를 문자열로 얻고 싶다면 `toString()` 메소드를 사용할 수 있지만 영문으로 출력되기 때문에 원하는 문자열로 얻고 싶다면 `SimpleDateFormat` 클래스와 함께 사용해야한다. [예제](sec08/DateExample.java)
+
+### Calender 클래스
+
+- `Calender` 클래스는 달력을 표현하는 추상 클래스이다
+- 날짜와 시간을 계산하는 방식이 지역과 문화에 따라 다르기 때문에 특정 역법에 따르는 달력은 자식클래스에서 구현하도록 되어있다.
+
+```java
+Calender now = Calender.getInstance();
+```
+
+- `Calender`가 제공하는 날짜와 시간에 대한 정보를 얻기 위해서는 `get()`메소드를 이용한다.
+- `get()` 메소드의 매개값으로 `Calender` 에 정의된 상수를 주면 상수가 의미하는 값을 리턴한다.
+
+```java
+int year = now.get(Calender.YEAR) ;
+int month = now.get(Calender.Month);
+int day = now.get(Calender.DAY_OF_WEEK);
+```
+
+- `Calender` 클래스의 오버로딩 된 다른 `getInstance()` 메소드를 이용하면 미국/로스엔젤레스와 같은 다른 시간대의 `Calender` 를 얻을 수 있다.
+
+```java
+TimeZone timeZone = TimeZone.getTimeZone("America/Los_Angeles");
+Calender now = Calender.getInstance(timeZone);
+```
+
+- 시간대 ID는 `TimeZone.getAvailableIDs()` 메소드가 리턴하는 값 중 하나를 사용하면 된다.
+
+### 날짜와 시간 조작
+
+- Date 와 Calendar는 날짜와 시간 정보를 얻기에는 충분하지만 날짜와 시간을 조작할 순 없다.
+- java.time 패키지의 LocalDateTime 클래스가 제공하는 메소드를 이용하면 매우 쉽게 날짜와 시간을 조작할 수 있다.
+- ![함수들](image/LocalDateTime.jpg)
+- [예시코드](sec08/DateTimeOperationExample.java)
+
+### 날짜와 시간 비교
+
+- LocalDateTime 클래스는 날짜와 시간을 비교할 수 있는 다음 메소드도 제공한다.
+- [예제](sec08/DateTimeOperationExample.java)
+
+|리턴타입|메소드(매개변수)|설명|
+|boolean|isAfter(other)|이후 날짜인지?|
+|boolean|isBefore(other)|이전 날짜인지?|
+|boolean|isEqual(other)|동일 날짜인지?|
+|long|until(other,unit)|주어진 단위(unit)차이를 리턴|
+
+## 12.9 형식 클래스
+
+### DecimalFormat
+
+- Format(형식) 클래스는 숫자 또는 날짜를 원하는 형태의 문자열로 변환해주는 기능을 제공한다.
+
+|  Format 클래스   |             설명              |
+| :--------------: | :---------------------------: |
+|  DecimalFormat   | 숫자를 형식화된 문자열로 변환 |
+| SimpleDateFormat | 날짜를 형식화된 문자열로 변환 |
+
+- ![이미지](image/DecimalFormat.jpg)
+
+- 패턴 정보와 DecimalFormat 객체를 생성하고 format() 메소드로 숫자를 제공하면 패턴에 따른 형식화된 문자열을 얻을 수 있다.
+- [예시](sec08/DecimalFormatExample.java)
+
+### SimpleDateFormat
+
+- `SimpleDateFormat` 은 날짜를 형식화 된 문자열로 변환하는 기능을 제공한다.
+- ![이미지](image/SimpleDateFormat.jpg)
+
+```java
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+String strDate = sdf.format(new Date()); //2021년 11월 28일
+```
